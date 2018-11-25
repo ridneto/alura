@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aprendendo IndexerDB</title>
+</head>
+<body>  
+    <script src="js/app/models/Negociacao.js"></script>
+    <script>
+        var connection;
+        var openRequest = window.indexedDB.open('aluraframe', 3);
+
+        // Cria ou alterar um banco já existente.
+        openRequest.onupgradeneeded = (e) => {
+            console.log('criado ou alterado com sucesso');
+
+            let minhaConnection = e.target.result;
+
+            if(minhaConnection.objectStoreNames.contains('negociacoes')){
+                console.log('destruindo');
+                minhaConnection.deleteObjectStore('negociacoes');
+            }
+            
+            minhaConnection.createObjectStore('negociacoes', { autoIncrement: true });
+        }
+
+        // Conseguir uma conexão com sucesso
+        openRequest.onsuccess = (e) => {
+            console.log('sucesso');
+            connection = e.target.result;
+        }
+
+        // Não conseguir uma conexão;
+        openRequest.onerror = (e) => {
+            console.log(e.target.error);
+        }
+
+        function adiciona(){
+            let transaction = connection.transaction(['negociacoes'], 'readwrite');
+
+            let store = transaction.objectStore('negociacoes');
+
+            let negociacao = new Negociacao(new Date(), 1, 200);
+            let request = store.add(negociacao);
+       
+            request.onsuccess = e => {
+                console.log('Negociação incluida com sucesso');
+            }
+
+            request.onerror = e => {
+                console.log('Não foi possível incluir a negociação');
+            }
+        }
+
+        function listaTodos(){
+            let transaction = connection.transaction(['negociacoes'], 'readwrite');
+
+            let store = transaction.objectStore('negociacoes');
+
+            let cursor = store.openCursor();
+
+            let negociacoes = [];
+            cursor.onsuccess = e => {
+                let atual = e.target.result;
+
+                if(atual){
+                    var dado = atual.value;
+
+                    negociacoes.push(new Negociacao(dado._data, dado._quantidade, dado._valor));
+                    atual.continue();
+                }else{
+                    console.log(negociacoes);
+                }
+            }
+
+            cursor.onerror = e => {
+                console.log('Não foi possível acessar o banco');
+            }
+        }
+        /*
+        ConnectionFactory
+            .getConnection()
+            .then(connection => {
+
+            });
+            */
+    </script>
+</body>
+</html>

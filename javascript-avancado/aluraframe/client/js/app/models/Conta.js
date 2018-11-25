@@ -1,25 +1,121 @@
-class Conta{
-    constructor(saldo){
-        this._saldo = saldo;
+'use strict';
+
+System.register([], function (_export, _context) {
+    "use strict";
+
+    var _createClass, Conta, ContaCorrente, ContaPoupanca;
+
+    function _possibleConstructorReturn(self, call) {
+        if (!self) {
+            throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+        }
+
+        return call && (typeof call === "object" || typeof call === "function") ? call : self;
     }
 
-    get saldo(){
-        return this._saldo;
+    function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+            throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+        }
+
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+            constructor: {
+                value: subClass,
+                enumerable: false,
+                writable: true,
+                configurable: true
+            }
+        });
+        if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
     }
 
-    atualiza(taxa){
-        throw new Error('O método atualiza não foi implementado.');
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
     }
-}
 
-class ContaCorrente extends Conta{
-    atualiza(taxa){
-        this._saldo += taxa;
-    }
-}
+    return {
+        setters: [],
+        execute: function () {
+            _createClass = function () {
+                function defineProperties(target, props) {
+                    for (var i = 0; i < props.length; i++) {
+                        var descriptor = props[i];
+                        descriptor.enumerable = descriptor.enumerable || false;
+                        descriptor.configurable = true;
+                        if ("value" in descriptor) descriptor.writable = true;
+                        Object.defineProperty(target, descriptor.key, descriptor);
+                    }
+                }
 
-class ContaPoupanca extends Conta{
-    atualiza(taxa){
-        this._saldo += taxa * 2;
-    }
-}
+                return function (Constructor, protoProps, staticProps) {
+                    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+                    if (staticProps) defineProperties(Constructor, staticProps);
+                    return Constructor;
+                };
+            }();
+
+            Conta = function () {
+                function Conta(saldo) {
+                    _classCallCheck(this, Conta);
+
+                    this._saldo = saldo;
+                }
+
+                _createClass(Conta, [{
+                    key: 'atualiza',
+                    value: function atualiza(taxa) {
+                        throw new Error('O método atualiza não foi implementado.');
+                    }
+                }, {
+                    key: 'saldo',
+                    get: function get() {
+                        return this._saldo;
+                    }
+                }]);
+
+                return Conta;
+            }();
+
+            ContaCorrente = function (_Conta) {
+                _inherits(ContaCorrente, _Conta);
+
+                function ContaCorrente() {
+                    _classCallCheck(this, ContaCorrente);
+
+                    return _possibleConstructorReturn(this, (ContaCorrente.__proto__ || Object.getPrototypeOf(ContaCorrente)).apply(this, arguments));
+                }
+
+                _createClass(ContaCorrente, [{
+                    key: 'atualiza',
+                    value: function atualiza(taxa) {
+                        this._saldo += taxa;
+                    }
+                }]);
+
+                return ContaCorrente;
+            }(Conta);
+
+            ContaPoupanca = function (_Conta2) {
+                _inherits(ContaPoupanca, _Conta2);
+
+                function ContaPoupanca() {
+                    _classCallCheck(this, ContaPoupanca);
+
+                    return _possibleConstructorReturn(this, (ContaPoupanca.__proto__ || Object.getPrototypeOf(ContaPoupanca)).apply(this, arguments));
+                }
+
+                _createClass(ContaPoupanca, [{
+                    key: 'atualiza',
+                    value: function atualiza(taxa) {
+                        this._saldo += taxa * 2;
+                    }
+                }]);
+
+                return ContaPoupanca;
+            }(Conta);
+        }
+    };
+});
+//# sourceMappingURL=Conta.js.map
