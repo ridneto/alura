@@ -20,4 +20,6 @@ export class PhotoService{
             .get<Photo[]>(API + '/' + userName + '/photos',
                 { params })
     }
+
+    // https://s3.amazonaws.com/caelum-online-public/901-angular-parte2/img/home.jpg
 }
