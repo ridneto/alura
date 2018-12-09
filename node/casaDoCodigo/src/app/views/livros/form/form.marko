@@ -1,0 +1,26 @@
+<html>
+    <body>
+        <h1> Cadastro de livro </h1>
+
+        <form action="/livros" method="post">
+            <input type="hidden" id="id" name="id">
+
+            <div>
+                <label for="titulo"> Titulo: </label>
+                <input type="text" autofocus id="titulo" name="titulo" placeholder="Título do livro">
+            </div>
+
+            <div>
+                <label for="preco"> Preço: </label>
+                <input type="text" id="preco" name="preco" placeholder="R$ 0,00">
+            </div>
+
+            <div>
+                <label for="descricao"> Descrição: </label>
+                <textarea col="20" rows="10" id="descricao" name="descricao" placeholder="Descrição do livro"> </textarea> 
+            </div>
+
+            <input type="submit" value="Salvar">
+        </form>
+    </body>
+</html>
